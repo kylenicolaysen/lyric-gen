@@ -11,6 +11,7 @@ submitButton.addEventListener('click', () => {
         vibes = ['happy', 'sad', 'romantic', 'angry'][r]
     }
     fetch(`/api?vibes=${vibes}&topic=${topic}`).then((res) => {
+        console.log('HHH', res)
         res.json().then((data) => {
             const lines = data.response.split('\n')
             let outputString = `<div><p>here's some ${vibes} lyrics about ${topic}:</p><br>`
