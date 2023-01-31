@@ -13,7 +13,7 @@ submitButton.addEventListener('click', () => {
     fetch(`/api?vibes=${vibes}&topic=${topic}`).then((res) => {
         res.json().then((data) => {
             const lines = data.response.split('\n')
-            let outputString = `<div><p>here's some ${vibes} lines about ${topic}:</p><br>`
+            let outputString = `<div><p>here's some ${vibes} lyrics about ${topic}:</p><br>`
             lines.forEach((line) => {
                 if (line === '') {
                     return
