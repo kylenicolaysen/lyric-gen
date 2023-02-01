@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000
 app.use(express.static(publicPath))
 
 app.get('/api', async (req, res) => {
-  const prompt = `Write me a short eight line verse from a ${req.query.vibes} song about ${req.query.topic}`
+  const prompt = `Write me a short four line verse from a ${req.query.vibes} song about ${req.query.topic}`
   const response = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: prompt,
