@@ -1,12 +1,34 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-export default () => {
-  const submitButton = document.querySelector('#submit-button')
-  console.log(submitButton)
-  // submitButton.addEventListener('click', () => {
-  //   console.log('skynet moved to nashville to write songs')
-  // })
+const MainPage = () => {
+  const submitButtonClicked = () => {
+    const outputContainer = document.querySelector('#output-container')
+    let vibe = document.querySelector('#vibe').value
+    const topic = document.querySelector('#topic-input').value
+    if (topic === '') {
+      return outputContainer.innerHTML = '<p>Please enter a topic</p>'
+    }
+    outputContainer.innerHTML = 'loading...'
+    if (vibe === 'random') {
+      const r = Math.floor(Math.random() * 4)
+      vibe = ['happy', 'sad', 'romantic', 'angry'][r]
+    }
+    fetch(`/api?vibes=${vibe}&topic=${topic}`).then((res) => {
+      res.json().then((data) => {
+        const lines = data.response.split('\n')
+        let outputString = `<div><p>here's some ${vibe} lyrics about ${topic}:</p><br>`
+        lines.forEach((line) => {
+          if (line === '') {
+            return
+          }
+          outputString = `${outputString}<p>${line}</p>`
+        })
+        outputString = outputString + '</div>'
+        outputContainer.innerHTML = outputString
+      })
+    })
+  }
+
   return (
     <div>
       <div>
@@ -27,9 +49,9 @@ export default () => {
                 </div>
                 <div id="topic-div">
                   <label htmlFor="topic">topic</label>
-                  <input type="text" id="topic" name="topic" />
+                  <input type="text" id="topic-input" name="topic" />
                 </div>
-                <button id="submit-button">submit</button>
+                <button id="submit-button" onClick={submitButtonClicked}>submit</button>
               </div>  
             </div>
           </div>
@@ -45,3 +67,5 @@ export default () => {
     </div>
   )
 }
+
+export default MainPage

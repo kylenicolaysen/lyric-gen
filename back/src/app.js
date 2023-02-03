@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+require('dotenv').config()
 const { Configuration, OpenAIApi } = require('openai')
 const router = new express.Router()
 const app = express()
@@ -9,16 +10,12 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
+
 app.use(cors({
     origin: 'http://localhost:8080'
 }))
 
 app.use(express.json())
-
-app.post('api/test', async (req, res) => {
-    console.log('API HIT')
-    res.json('test api response')
-})
 
 app.get('/api', async (req, res) => {
     const prompt = `Write me a short eight line verse from a ${req.query.vibes} song about ${req.query.topic}`
